@@ -32,6 +32,9 @@
                 <button type="submit" class="btn search-button" id="search-button" aria-label="submit search">
                   Search
                 </button>
+                <button type="submit" class="btn search-button" id="forecast-search-button" aria-label="submit search">
+                  5 Day Forecast
+                </button>
                 <hr class="hr weather-hr" />
               </div>
             </div>
@@ -41,17 +44,34 @@
       </aside>
 
       <div class="col-lg-9 pb-3">
-        <section id="today" class="mt-3" role="region" aria-live="polite"></section>
-        <section id="forecast" class="row mt-3" role="region" aria-live="polite"></section>
+        <section id="today" class="mt-3" role="region" aria-live="polite">
+          <div id="city"></div>
+          <div id="date"></div>
+          <img id="icon" href="" src="">
+          <div id="temp"></div>
+          <div id="humidity"></div>
+          <div id="wind"></div>
+        </section>
+        <div id="forecast-container">
+        <template id="forecast-template">
+          <div class="forecast">
+            <h3 class="forecast-date"></h3>
+            <img class="forecast-icon" />
+            <p class="forecast-temp"></p>
+            <p class="forecast-humidity"></p>
+            <p class="forecast-wind"></p>
+          </div>
+        </template>
+      </div>
       </div>
     </div>
   </div>
 
   <!-- Moment.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
   <!-- jQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="script.js"></script>
+  <script src="./script.js"></script>
 </body>
 
 </html>
