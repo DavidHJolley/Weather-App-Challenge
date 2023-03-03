@@ -8,6 +8,9 @@ const domHumidity = document.querySelector("#humidity");
 const domWind = document.querySelector("#wind");
 const forecast = document.querySelector("#forecast-search-button"); 
 const searchForm = document.querySelector("#search-form");
+const forecastTitle = document.querySelector("#five-day-title");
+var forecastTemplate = document.querySelector("#forecast-template");
+
 
 if(localStorage){
   ShowHistory();
@@ -21,49 +24,64 @@ searchForm.addEventListener("submit", function(event) {
 searchButton.addEventListener("click", function(){
   fetchWeatherData(document.querySelector('#search-input').value);
   AddCity(document.querySelector('#search-input').value);
+  ShowForecast(document.querySelector('#search-input').value)
 })
 
-forecast.addEventListener("click", function() {
-    var city = document.querySelector('#search-input').value;
-    var date = moment();
-    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${key}&units=metric`;
-    fetch(forecastUrl)
-  .then(response => response.json())
-  .then(data => {
-    // Use the data to display the 5-day forecast
-    const forecastContainer = document.querySelector("#forecast-container");
-    const template = document.querySelector("#forecast-template");
-    var currentDate = moment();
+function ShowForecast(city) {
+  console.log("Forecast button clicked");
 
-    // Remove any existing forecast elements
-    forecastContainer.innerHTML = "";
+  // Show or hide the forecast title depending on its current state
+  if (forecast.classList.contains("d-none")) {
+    forecastTitle.classList.remove("d-none");
+  } else {
+    forecastTitle.classList.add("d-none");
+  }
 
-    for (let i = 0; i < 5; i++) {
-      const forecastDate = currentDate.format("ddd");
-      currentDate.add(1, "day");
-      const forecastIcon = `https://openweathermap.org/img/w/${data.list[i].weather[0].icon}.png`;
-      const forecastTemp = data.list[i].main.temp;
-      const forecastHumidity = data.list[i].main.humidity;
-      const forecastWindSpeed = data.list[i].wind.speed;
+  // Get the current date
+  var date = moment();
 
-      // Create a copy of the template for this day of forecast
-      const forecastElement = template.content.cloneNode(true);
+  // Build the forecast URL using the city parameter
+  const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${key}&units=metric`;
 
-      // Update the content of the forecast element with the forecast data
-      forecastElement.querySelector(".forecast-date").textContent = forecastDate;
-      forecastElement.querySelector(".forecast-icon").src = forecastIcon;
-      forecastElement.querySelector(".forecast-temp").textContent = `Temperature: ${forecastTemp} Degrees`;
-      forecastElement.querySelector(".forecast-humidity").textContent = `Humidity: ${forecastHumidity}`;
-      forecastElement.querySelector(".forecast-wind").textContent = `Windspeed: ${forecastWindSpeed}`;
+  // Fetch the forecast data from the API
+  fetch(forecastUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      // Use the data to display the 5-day forecast
+      var forecastContainer = document.querySelector("#forecast-container");
+      var currentDate = moment();
 
-      // Add the forecast element to the container
-      forecastContainer.appendChild(forecastElement);
-    }
-  })
-  .catch(error => {
-    // Handle errors
-  });
-})
+      // Remove any existing forecast elements
+      forecastContainer.innerHTML = "";
+
+      // Loop through the forecast data and create an element for each day
+      for (let i = 0; i < 5; i++) {
+        var forecastDate = currentDate.format("ddd");
+        currentDate.add(1, "day");
+        var forecastIcon = `https://openweathermap.org/img/w/${data.list[i].weather[0].icon}.png`;
+        var forecastTemp = data.list[i].main.temp;
+        var forecastHumidity = data.list[i].main.humidity;
+        var forecastWindSpeed = data.list[i].wind.speed;
+
+        // Create a copy of the template for this day of forecast
+        var forecastElement = forecastTemplate.content.cloneNode(true);
+
+        // Update the content of the forecast element with the forecast data
+        forecastElement.querySelector(".forecast-date").textContent = forecastDate;
+        forecastElement.querySelector(".forecast-icon").src = forecastIcon;
+        forecastElement.querySelector(".forecast-temp").textContent = `Temperature: ${forecastTemp} Degrees`;
+        forecastElement.querySelector(".forecast-humidity").textContent = `Humidity: ${forecastHumidity}`;
+        forecastElement.querySelector(".forecast-wind").textContent = `Windspeed: ${forecastWindSpeed}`;
+
+        // Add the forecast element to the container
+        forecastContainer.appendChild(forecastElement);
+      }
+    })
+    .catch((error) => {
+      // Handle errors
+    });
+}
+
 
 
 // get everything from the history array and put it inito local storage
@@ -96,8 +114,8 @@ function ShowHistory(){
 
     // Add an event listener to the button
     historyElement.querySelector(".history-button").addEventListener("click", function() {
-      // Call a function to fetch the weather data for the city and display it on the page
       fetchWeatherData(city);
+      ShowForecast(city);
     });
     
 

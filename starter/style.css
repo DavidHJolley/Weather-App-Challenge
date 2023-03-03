@@ -1,0 +1,18 @@
+#today{
+    border: 1px solid black;
+}
+#today:empty{
+    border:none;
+}
+.history-button {
+    background-color: blue;
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+    border: 10px;
+    margin-bottom : 10px;
+  }
+.forecast{
+    background-color: gray;
+    margin-right: 20px;
+}
