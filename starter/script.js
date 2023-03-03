@@ -126,7 +126,7 @@ function ShowHistory(){
 function AddCity(city) {
   // Get the history from localStorage
   const history = JSON.parse(localStorage.getItem("history")) || [];
-
+  
   // Check if city is already in history
   if (history.includes(city)) {
     return;
@@ -163,7 +163,6 @@ function fetchWeatherData(city){
   // push city to array then add city to history
   var date = moment();
   const currentUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&units=metric`;
-  
   // Fetch current weather data
   fetch(currentUrl)
   .then(response => response.json())
