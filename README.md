@@ -17,17 +17,15 @@ The Weather App is a web application that provides real-time weather information
 - JavaScript
 - OpenWeather API
 
+## Link
+
+https://davidhjolley.github.io/Weather-App-Challenge/
+
 ## Screenshots
 
 ![Weather App Home Page](/screenshots/home.png)
 
 ![Weather App Results Page](/screenshots/results.png)
-
-## Installation
-
-1. Clone the repository: `git clone https://github.com/yourusername/weather-app.git`
-2. Navigate to the project directory: `cd weather-app`
-3. Open the index.html file in your preferred browser
 
 ## Usage
 
