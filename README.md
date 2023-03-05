@@ -23,9 +23,7 @@ https://davidhjolley.github.io/Weather-App-Challenge/
 
 ## Screenshots
 
-![Weather App Home Page](/screenshots/home.png)
-
-![Weather App Results Page](/screenshots/results.png)
+![Weather App Home Page](./starter/Capture.PNG)
 
 ## Usage
 
